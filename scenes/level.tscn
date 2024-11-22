@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://beb61o2ado56q"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_gk84o"]
+[ext_resource type="PackedScene" uid="uid://c0bl7md1dpouq" path="res://scenes/spaceship.tscn" id="1_qomin"]
+[ext_resource type="Texture2D" uid="uid://wu1o24gput4b" path="res://assets/stars_only_background_2.png" id="2_dx0j7"]
+[ext_resource type="FontFile" uid="uid://c7tcmoyqesnsg" path="res://assets/PixelOperator8-Bold.ttf" id="4_cq8ml"]
+[ext_resource type="AudioStream" uid="uid://di8cpwdx84a4l" path="res://assets/shoot.wav" id="6_arenx"]
+[ext_resource type="AudioStream" uid="uid://c35fgh3okekbw" path="res://assets/hurt.wav" id="7_83vt5"]
+
+[sub_resource type="Curve2D" id="Curve2D_eygg8"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, -64, 0, 0, 0, 0, 1984, -64, 0, 0, 0, 0, 1984, 1152, 0, 0, 0, 0, -64, 1152, 0, 0, 0, 0, -64, -64)
+}
+point_count = 5
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_gk84o")
+
+[node name="SpaceBackground" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(973, 530)
+scale = Vector2(1, 0.946)
+texture = ExtResource("2_dx0j7")
+region_enabled = true
+region_rect = Rect2(-618.259, -364.341, 3079.43, 1767.56)
+
+[node name="Spaceship" parent="." instance=ExtResource("1_qomin")]
+position = Vector2(960, 576)
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Asteroids" type="Node2D" parent="."]
+
+[node name="AsteroidTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="AsteroidPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_eygg8")
+
+[node name="AsteroidSpawnPath" type="PathFollow2D" parent="AsteroidPath"]
+position = Vector2(-64, -64)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LivesLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("4_cq8ml")
+theme_override_font_sizes/font_size = 22
+text = "LIVES: 3"
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("4_cq8ml")
+theme_override_font_sizes/font_size = 22
+text = "SCORE: 0
+"
+horizontal_alignment = 2
+
+[node name="PlayerShoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_arenx")
+
+[node name="AsteroidHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_83vt5")
+
+[connection signal="projectile" from="Spaceship" to="." method="_on_spaceship_projectile"]
+[connection signal="timeout" from="AsteroidTimer" to="." method="_on_asteroid_timer_timeout"]

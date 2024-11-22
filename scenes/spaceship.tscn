@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0bl7md1dpouq"]
+
+[ext_resource type="Script" path="res://scripts/Spaceship.gd" id="1_3jwuc"]
+[ext_resource type="Texture2D" uid="uid://dxsyki6pmjo8d" path="res://assets/seisware_ship.png" id="2_iyxuw"]
+[ext_resource type="Texture2D" uid="uid://bbff4k4v3o7gv" path="res://assets/white.png" id="3_nrdbt"]
+[ext_resource type="AudioStream" uid="uid://dtyxljqog7u6" path="res://assets/explosion.wav" id="4_8xeb0"]
+[ext_resource type="AudioStream" uid="uid://cm5hr352yn7gq" path="res://assets/thrust.mp3" id="5_od7e2"]
+
+[sub_resource type="Gradient" id="Gradient_4a17q"]
+colors = PackedColorArray(0.903598, 0.903598, 0.903598, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_boriq"]
+gradient = SubResource("Gradient_4a17q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h3c70"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 15.0
+initial_velocity_min = 100.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.75
+color = Color(0.941176, 0.941176, 0.941176, 0.266667)
+color_ramp = SubResource("GradientTexture1D_boriq")
+
+[node name="Spaceship" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_3jwuc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_iyxuw")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PackedVector2Array(0, -16, 10, 15, 0, 7, -10, 15)
+
+[node name="ThrusterParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-10.5, 0)
+emitting = false
+amount = 250
+process_material = SubResource("ParticleProcessMaterial_h3c70")
+texture = ExtResource("3_nrdbt")
+
+[node name="GunTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="InvulnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PlayerHurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_8xeb0")
+
+[node name="ThrustSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_od7e2")
+
+[connection signal="timeout" from="GunTimer" to="." method="_on_gun_timer_timeout"]
+[connection signal="timeout" from="InvulnTimer" to="." method="_on_invuln_timer_timeout"]

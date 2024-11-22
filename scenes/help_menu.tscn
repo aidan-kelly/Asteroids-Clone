@@ -1,0 +1,78 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvhffflptv0i7"]
+
+[ext_resource type="Script" path="res://scripts/help_menu.gd" id="1_74j0o"]
+[ext_resource type="Texture2D" uid="uid://wu1o24gput4b" path="res://assets/stars_only_background_2.png" id="1_qvrf6"]
+[ext_resource type="FontFile" uid="uid://dij1ld6qms7h6" path="res://assets/PixelOperator8.ttf" id="2_wc75n"]
+[ext_resource type="FontFile" uid="uid://c7tcmoyqesnsg" path="res://assets/PixelOperator8-Bold.ttf" id="3_bcd5p"]
+
+[node name="HelpMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_74j0o")
+
+[node name="SpaceBackground" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(973, 530)
+scale = Vector2(1, 0.946)
+texture = ExtResource("1_qvrf6")
+region_enabled = true
+region_rect = Rect2(-618.259, -364.341, 3079.43, 1767.56)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_wc75n")
+theme_override_font_sizes/font_size = 22
+text = "The year is 20XX, humanity has taken to the cosmos. With MUrr4Y8r4CK.exe at the helm, SeisWare has followed. 
+
+You are a Sales representative on their way to a local stellar system for a coffee meeting with a potential client when you find yourself in a seemingly endless field of space rocks. 
+
+Luckily your SeisWare training was prepared you for this.
+
+You will survive. 
+
+You MUST survive.
+
+SeisWare doesn't sell itself. "
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_wc75n")
+theme_override_font_sizes/font_size = 22
+text = "
+
+Controls:
+A: Rotate left
+D: Rotate right
+W: Thrust
+Space: Shoot
+
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_bcd5p")
+theme_override_font_sizes/font_size = 32
+text = "Main Menu"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

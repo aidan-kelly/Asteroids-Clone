@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdwjr1t4aso78"]
+
+[ext_resource type="Texture2D" uid="uid://wu1o24gput4b" path="res://assets/stars_only_background_2.png" id="1_5ksdr"]
+[ext_resource type="Script" path="res://scripts/game_over_menu.gd" id="1_a1yei"]
+[ext_resource type="FontFile" uid="uid://c7tcmoyqesnsg" path="res://assets/PixelOperator8-Bold.ttf" id="2_fvs1b"]
+[ext_resource type="FontFile" uid="uid://dij1ld6qms7h6" path="res://assets/PixelOperator8.ttf" id="3_flunj"]
+
+[node name="GameOverMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a1yei")
+
+[node name="SpaceBackground" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(973, 530)
+scale = Vector2(1, 0.946)
+texture = ExtResource("1_5ksdr")
+region_enabled = true
+region_rect = Rect2(-618.259, -364.341, 3079.43, 1767.56)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fvs1b")
+theme_override_font_sizes/font_size = 50
+text = "Game Over!!!
+"
+horizontal_alignment = 1
+
+[node name="SpacerLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_flunj")
+theme_override_font_sizes/font_size = 32
+text = "XXXX points"
+horizontal_alignment = 1
+
+[node name="SpacerLabel2" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HighScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_flunj")
+theme_override_font_sizes/font_size = 32
+text = "High Score: XXXX"
+horizontal_alignment = 1
+
+[node name="SpacerLabel3" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="PlayAgainButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fvs1b")
+theme_override_font_sizes/font_size = 32
+text = "Play Again"
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fvs1b")
+theme_override_font_sizes/font_size = 32
+text = "Main Menu"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fvs1b")
+theme_override_font_sizes/font_size = 32
+text = "Exit Game"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
